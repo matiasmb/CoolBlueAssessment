@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:layout="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/common_spacing">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_layout"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/match_constraint"
+        layout:cardUseCompatPadding="true"
+        layout:layout_constraintBottom_toBottomOf="parent"
+        layout:layout_constraintLeft_toLeftOf="parent"
+        layout:layout_constraintRight_toRightOf="parent"
+        layout:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="@dimen/horizontal_spacing"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:contentDescription="@string/image_description"
+        android:elevation="@dimen/elevation"
+        layout:layout_constraintLeft_toLeftOf="@id/card_layout"
+        layout:layout_constraintTop_toTopOf="@id/card_layout" />
+
+    <TextView
+        android:id="@+id/product_name"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toTopOf="@id/product_image"
+        tools:text="{product name}" />
+
+    <TextView
+        android:id="@+id/product_price"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        android:textColor="@color/red"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toBottomOf="@id/product_name"
+        tools:text="$236" />
+
+    <TextView
+        android:id="@+id/product_stock"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toBottomOf="@id/product_price"
+        tools:text="Stock: 12" />
+
+    <TextView
+        android:id="@+id/product_delivery_express"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        android:text="@string/delivery_express"
+        android:textColor="@color/green"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toBottomOf="@id/product_stock" />
+
+    <TextView
+        android:id="@+id/product_extra_info"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toBottomOf="@id/product_delivery_express"
+        tools:text="info, detail, extra" />
+
+    <RatingBar
+        android:id="@+id/product_rating_bar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_spacing_small"
+        android:elevation="@dimen/elevation"
+        android:numStars="10"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintTop_toBottomOf="@id/product_extra_info"
+        tools:rating="4.2" />
+
+    <TextView
+        android:id="@+id/product_rating_info"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vertical_spacing"
+        android:elevation="@dimen/elevation"
+        android:textSize="@dimen/small_text_font"
+        layout:layout_constraintBottom_toBottomOf="parent"
+        layout:layout_constraintRight_toRightOf="@id/product_rating_bar"
+        layout:layout_constraintTop_toBottomOf="@id/product_rating_bar"
+        tools:text="4.5 over 1567" />
+</androidx.constraintlayout.widget.ConstraintLayout>
