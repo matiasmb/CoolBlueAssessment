@@ -1,9 +1,7 @@
 package com.matiasmb.coolbluesearch.data.networking
 
 import com.matiasmb.coolbluesearch.TestData
-import com.matiasmb.coolbluesearch.data.model.Product
-import com.matiasmb.coolbluesearch.data.model.Resource
-import com.nhaarman.mockitokotlin2.doAnswer
+import com.matiasmb.coolbluesearch.data.model.Response
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,8 +10,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
-import java.net.UnknownHostException
 
 @ExperimentalCoroutinesApi
 class ItemsApiServiceImplTest {
@@ -21,61 +19,39 @@ class ItemsApiServiceImplTest {
     private lateinit var itemsApiService: ItemsApiServiceImpl
 
     @Test
-    fun `getReposByUsername WHEN ItemsApiClient return a list of GithubRepo SHOULD return a list of GithubRepo`() {
+    fun `searchProducts WHEN ItemsApiClient give a successful response SHOULD return a non empty list of product inside the response`() {
         runBlocking {
             // GIVEN
             val apiClient = mock<ItemsApiClient> {
-                onBlocking { searchReposByUsername(anyString()) } doReturn TestData.dataRepoResponseList
+                onBlocking { searchProducts(anyString(), anyInt()) } doReturn TestData.dataRepoResponse
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 
             //WHEN
-            val response: Flow<Resource<List<Product>>> =
-                itemsApiService.getReposByUsername("google")
+            val response: Flow<Response> = itemsApiService.getProductsByQuery("iphone", 1)
 
             //THEN
             response.collect {
-                assertTrue(it is Resource.Success)
+                assertTrue(it.products.isNotEmpty())
             }
         }
     }
 
     @Test
-    fun `getReposByUsername WHEN ItemsApiClient return an empty list of GithubRepo SHOULD return ResourceFailure`() {
+    fun `searchProducts WHEN ItemsApiClient give a successful response SHOULD return an empty list of product inside the response`() {
         runBlocking {
             // GIVEN
             val apiClient = mock<ItemsApiClient> {
-                onBlocking { searchReposByUsername(anyString()) } doReturn TestData.dataRepoResponseEmpty
+                onBlocking { searchProducts(anyString(), anyInt()) } doReturn TestData.dataRepoResponseEmpty
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 
             //WHEN
-            val response: Flow<Resource<List<Product>>> =
-                itemsApiService.getReposByUsername("google")
+            val response: Flow<Response> = itemsApiService.getProductsByQuery("iphone", 1)
 
             //THEN
             response.collect {
-                assertTrue(it is Resource.Failure)
-            }
-        }
-    }
-
-    @Test
-    fun `getReposByUsername WHEN ItemsApiClient return an Exception SHOULD SHOULD return ResourceFailure`() {
-        runBlocking {
-            // GIVEN
-            val apiClient = mock<ItemsApiClient> {
-                onBlocking { searchReposByUsername(anyString()) } doAnswer { throw UnknownHostException() }
-            }
-            itemsApiService = ItemsApiServiceImpl(apiClient)
-
-            //WHEN
-            val response: Flow<Resource<List<Product>>> =
-                itemsApiService.getReposByUsername("google")
-
-            //THEN
-            response.collect {
-                assertTrue(it is Resource.Failure)
+                assertTrue(it.products.isEmpty())
             }
         }
     }

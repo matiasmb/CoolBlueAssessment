@@ -19,7 +19,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.matiasmb.coolbluesearch.R
-import com.matiasmb.coolbluesearch.presentation.view.RecyclerViewMatcher.checkElementsByUsernameSearch
+import com.matiasmb.coolbluesearch.presentation.view.RecyclerViewMatcher.countElementDisplayedOnScreen
 import com.matiasmb.coolbluesearch.presentation.view.RecyclerViewMatcher.withItemCount
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -55,11 +55,11 @@ class ItemsActivityAutomationTest {
                 isDisplayed()
             )
         )
-        searchAutoComplete.perform(replaceText("google"), closeSoftKeyboard())
+        searchAutoComplete.perform(replaceText("iphone"), closeSoftKeyboard())
 
         val searchAutoComplete2 = onView(
             allOf(
-                withId(R.id.search_src_text), withText("google"),
+                withId(R.id.search_src_text), withText("iphone"),
                 childAtPosition(
                     allOf(
                         withId(R.id.search_plate),
@@ -92,8 +92,8 @@ class ItemsActivityAutomationTest {
             )
         )
         recyclerView.check(matches(isDisplayed()))
-        recyclerView.check(matches(withItemCount(31)))
-        recyclerView.check(matches(checkElementsByUsernameSearch("google")))
+        recyclerView.check(matches(withItemCount(48)))
+        recyclerView.check(matches(countElementDisplayedOnScreen(3)))
     }
 
     fun typeTextInChildViewWithId(id: Int): ViewAction {

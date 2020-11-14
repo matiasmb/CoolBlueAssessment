@@ -1,60 +1,76 @@
 package com.matiasmb.coolbluesearch.domain
 
-import com.matiasmb.coolbluesearch.TestData.serviceFailureResponse
-import com.matiasmb.coolbluesearch.TestData.serviceSuccessResponse
-import com.matiasmb.coolbluesearch.data.model.Resource
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.matiasmb.coolbluesearch.CoroutinesRule
+import com.matiasmb.coolbluesearch.TestData
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
-import com.matiasmb.coolbluesearch.presentation.model.ItemView
+import com.matiasmb.coolbluesearch.domain.interactor.DomainInteractorImpl
+import com.matiasmb.coolbluesearch.getOrAwaitValue
+import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.mock
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers
 
 @ExperimentalCoroutinesApi
 class DomainInteractorImplTest {
 
+    @get:Rule
+    var coroutinesRule = CoroutinesRule()
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
+
     private lateinit var domainInteractor: DomainInteractorImpl
 
     @Test
-    fun `performSearch SHOULD return a ResourceSuccess with an array list of ItemView`() {
-        runBlocking {
-            // GIVEN
-            val itemsApiService = mock<ItemsApiService> {
-                onBlocking { getReposByUsername(anyString()) } doReturn serviceSuccessResponse
-            }
-            domainInteractor = DomainInteractorImpl(itemsApiService)
+    fun `getPagedListConfig SHOULD config the paged list with page size of 24 and get the place holder disable`() {
+        // GIVEN
+        domainInteractor = DomainInteractorImpl(mock())
 
-            //WHEN
-            val response = domainInteractor.performSearch("google")
+        //WHEN
+        val config = domainInteractor.getPagedListConfig()
 
-            //THEN
-            response.collect {
-                assertTrue(it is Resource.Success)
-                assertTrue((it as Resource.Success).data.first() is ItemView.ViewUserHeader)
-            }
-        }
+        //THEN
+        assertTrue(24 == config.pageSize)
+        assertFalse(config.enablePlaceholders)
     }
 
     @Test
-    fun `performSearch SHOULD return a ResourceFailure after receive an Failure from ApiService`() {
-        runBlocking {
-            // GIVEN
-            val itemsApiService = mock<ItemsApiService> {
-                onBlocking { getReposByUsername(anyString()) } doReturn serviceFailureResponse
-            }
-            domainInteractor = DomainInteractorImpl(itemsApiService)
+    fun `getProductDataSourceFactory SHOULD create product data source factory and provide a mutable live data`() {
+        // GIVEN
+        domainInteractor = DomainInteractorImpl(mock())
 
-            //WHEN
-            val response = domainInteractor.performSearch("google")
+        //WHEN
+        val productDataSourceFactory = domainInteractor.getProductDataSourceFactory("iphone")
 
-            //THEN
-            response.collect {
-                assertTrue(it is Resource.Failure)
-            }
+        //THEN
+        assertNotNull(productDataSourceFactory.source)
+    }
+
+    @Test
+    fun `performSearch SHOULD get a paged list not empty`() {
+        // GIVEN
+        val itemsApiService = mock<ItemsApiService> {
+            onBlocking {
+                getProductsByQuery(
+                    ArgumentMatchers.anyString(),
+                    ArgumentMatchers.anyInt()
+                )
+            } doReturn TestData.serviceSuccessResponse
         }
+        domainInteractor = DomainInteractorImpl(itemsApiService)
+
+        //WHEN
+        val listing = domainInteractor.performSearch("iphone")
+
+        //THEN
+        assertTrue(listing.pagedList.getOrAwaitValue().snapshot().isNotEmpty())
     }
 }

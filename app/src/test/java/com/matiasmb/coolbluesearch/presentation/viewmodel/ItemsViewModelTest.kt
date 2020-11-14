@@ -2,11 +2,11 @@ package com.matiasmb.coolbluesearch.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.matiasmb.coolbluesearch.CoroutinesRule
-import com.matiasmb.coolbluesearch.TestData.dataList
-import com.matiasmb.coolbluesearch.TestData.serviceFailureResponse
-import com.matiasmb.coolbluesearch.domain.DomainInteractor
+import com.matiasmb.coolbluesearch.TestData
+import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
+import com.matiasmb.coolbluesearch.domain.interactor.DomainInteractorImpl
 import com.matiasmb.coolbluesearch.getOrAwaitValue
-import com.matiasmb.coolbluesearch.presentation.model.ItemsStateScreen
+import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers
 
 @ExperimentalCoroutinesApi
 class ItemsViewModelTest {
@@ -38,41 +38,28 @@ class ItemsViewModelTest {
     }
 
     @Test
-    fun `fetchItems SHOULD call stateScreen liveData with ItemsStateScreen ShowItems`() {
+    fun `fetchItems SHOULD call products liveData WITH a list of products AND stateScreen liveData should be success`() {
         runBlocking {
             launch(Dispatchers.Main) {
 
                 //GIVEN
-                val domainInteractor = mock<DomainInteractor> {
-                    onBlocking { performSearch(anyString()) } doReturn dataList
+                val itemsApiService = mock<ItemsApiService> {
+                    onBlocking {
+                        getProductsByQuery(
+                            ArgumentMatchers.anyString(),
+                            ArgumentMatchers.anyInt()
+                        )
+                    } doReturn TestData.serviceSuccessResponse
                 }
+                val domainInteractor = DomainInteractorImpl(itemsApiService)
                 viewModel = ItemsViewModel(domainInteractor)
 
                 //WHEN
-                viewModel.fetchItems("google")
+                viewModel.fetchItems("iphone")
 
                 //THEN
-                assertTrue(viewModel.stateScreen.getOrAwaitValue() is ItemsStateScreen.ShowItems)
-            }
-        }
-    }
-
-    @Test
-    fun `fetchItems SHOULD call stateScreen liveData with ItemsStateScreen ShowErrorLoading`() {
-        runBlocking {
-            launch(Dispatchers.Main) {
-
-                //GIVEN
-                val domainInteractor = mock<DomainInteractor> {
-                    onBlocking { performSearch(anyString()) } doReturn serviceFailureResponse
-                }
-                viewModel = ItemsViewModel(domainInteractor)
-
-                //WHEN
-                viewModel.fetchItems("google")
-
-                //THEN
-                assertTrue(viewModel.stateScreen.getOrAwaitValue() is ItemsStateScreen.ShowErrorLoading)
+                assertTrue(viewModel.products.getOrAwaitValue().snapshot().isNotEmpty())
+                assertTrue(viewModel.stateScreen.getOrAwaitValue() is TransactionState.Success)
             }
         }
     }

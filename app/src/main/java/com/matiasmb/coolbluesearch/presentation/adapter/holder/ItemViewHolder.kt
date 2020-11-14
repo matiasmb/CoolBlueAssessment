@@ -12,17 +12,21 @@ import kotlinx.android.synthetic.main.item_product.view.*
 
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun onBindViewHolder(data: ItemView) {
-        val holderData = data as ItemView.Product
-        itemView.apply {
-            product_name.text = holderData.name
-            product_image.loadImage(holderData.imageUrl, itemView.context)
-            product_price.parseCurrency(holderData.price)
-            product_stock.formatAndSetText(holderData.stock.toString())
-            product_extra_info.text = holderData.extraInfo.toString()
-            product_delivery_express.visibility = if (holderData.nextDayDeliveryFlag) VISIBLE else GONE
-            product_rating_bar.rating = holderData.reviewAverage.toFloat()
-            product_rating_info.text = "${holderData.reviewAverage} over ${holderData.reviewCount} votes"
+    fun onBindViewHolder(data: ItemView?) {
+        val holderData = data as? ItemView.Product
+        holderData?.let { productItemViewData ->
+            itemView.apply {
+                product_name.text = productItemViewData.name
+                product_image.loadImage(productItemViewData.imageUrl, itemView.context)
+                product_price.parseCurrency(productItemViewData.price)
+                product_stock.formatAndSetText(productItemViewData.stock.toString())
+                product_extra_info.text = productItemViewData.extraInfo.toString()
+                product_delivery_express.visibility =
+                    if (productItemViewData.nextDayDeliveryFlag) VISIBLE else GONE
+                product_rating_bar.rating = productItemViewData.reviewAverage.toFloat()
+                product_rating_info.text =
+                    "${productItemViewData.reviewAverage} over ${productItemViewData.reviewCount} votes"
+            }
         }
     }
 }

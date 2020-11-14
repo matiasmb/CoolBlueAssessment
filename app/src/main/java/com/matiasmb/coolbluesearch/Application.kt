@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiClient
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiServiceImpl
-import com.matiasmb.coolbluesearch.domain.DomainInteractor
-import com.matiasmb.coolbluesearch.domain.DomainInteractorImpl
+import com.matiasmb.coolbluesearch.domain.interactor.DomainInteractor
+import com.matiasmb.coolbluesearch.domain.interactor.DomainInteractorImpl
 import com.matiasmb.coolbluesearch.presentation.viewmodel.ItemsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient

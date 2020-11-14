@@ -9,9 +9,6 @@ import org.hamcrest.Matcher
 
 object RecyclerViewMatcher {
 
-    const val VIEW_USER_HEADER = 0
-    const val VIEW_REPO = 1
-
     fun withItemCount(count: Int): Matcher<View> {
         return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description?) {
@@ -24,14 +21,14 @@ object RecyclerViewMatcher {
         }
     }
 
-    fun checkElementsByUsernameSearch(searchName: String): Matcher<View> {
+    fun countElementDisplayedOnScreen(count: Int): Matcher<View> {
         return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description?) {
-                description?.appendText("RecyclerView test firs element $searchName")
+                description?.appendText("Elements Showed on the screen $count")
             }
 
             override fun matchesSafely(item: RecyclerView?): Boolean {
-                return item?.adapter?.let {  it.getItemViewType(0) == VIEW_USER_HEADER && it.getItemViewType(1) == VIEW_REPO } ?: false
+                return item?.childCount == count
             }
         }
     }
