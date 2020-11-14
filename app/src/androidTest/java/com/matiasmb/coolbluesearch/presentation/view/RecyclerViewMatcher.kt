@@ -6,7 +6,6 @@ import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-
 object RecyclerViewMatcher {
 
     fun withItemCount(count: Int): Matcher<View> {

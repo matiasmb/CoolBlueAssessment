@@ -1,14 +1,11 @@
-package com.matiasmb.coolbluesearch.domain
+package com.matiasmb.coolbluesearch.domain.interactor
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.matiasmb.coolbluesearch.CoroutinesRule
 import com.matiasmb.coolbluesearch.TestData
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
-import com.matiasmb.coolbluesearch.domain.interactor.DomainInteractorImpl
 import com.matiasmb.coolbluesearch.getOrAwaitValue
-import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.mock
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertNotNull

@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations.switchMap
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
-import com.matiasmb.coolbluesearch.domain.repository.ProductDataSourceFactory
+import com.matiasmb.coolbluesearch.domain.provider.ProductDataSourceFactory
 import com.matiasmb.coolbluesearch.presentation.model.ItemView
 import com.matiasmb.coolbluesearch.presentation.model.Listing
 import kotlinx.coroutines.ExperimentalCoroutinesApi

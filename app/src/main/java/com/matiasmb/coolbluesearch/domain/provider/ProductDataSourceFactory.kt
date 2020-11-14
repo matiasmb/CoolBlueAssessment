@@ -1,4 +1,4 @@
-package com.matiasmb.coolbluesearch.domain.repository
+package com.matiasmb.coolbluesearch.domain.provider
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource

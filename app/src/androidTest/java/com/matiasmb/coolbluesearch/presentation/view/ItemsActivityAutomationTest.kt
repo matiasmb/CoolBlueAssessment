@@ -1,6 +1,5 @@
 package com.matiasmb.coolbluesearch.presentation.view
 
-
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView

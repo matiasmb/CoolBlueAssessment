@@ -13,4 +13,5 @@
     <dimen name="vertical_spacing">24dp</dimen>
 
     <dimen name="small_text_font">12sp</dimen>
+    <dimen name="place_holder_medium_size">100dp</dimen>
 </resources>

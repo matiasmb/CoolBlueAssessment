@@ -1,18 +1,14 @@
 package com.matiasmb.coolbluesearch.presentation.view
 
-import android.content.Intent
 import android.os.Build
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.paging.PagedList
 import com.matiasmb.coolbluesearch.TestData.itemViewList
 import com.matiasmb.coolbluesearch.mockPagedList
-import com.matiasmb.coolbluesearch.presentation.model.ItemView
 import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test

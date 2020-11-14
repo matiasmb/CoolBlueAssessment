@@ -23,7 +23,12 @@ class ItemsApiServiceImplTest {
         runBlocking {
             // GIVEN
             val apiClient = mock<ItemsApiClient> {
-                onBlocking { searchProducts(anyString(), anyInt()) } doReturn TestData.dataRepoResponse
+                onBlocking {
+                    searchProducts(
+                        anyString(),
+                        anyInt()
+                    )
+                } doReturn TestData.dataRepoResponse
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 
@@ -42,7 +47,12 @@ class ItemsApiServiceImplTest {
         runBlocking {
             // GIVEN
             val apiClient = mock<ItemsApiClient> {
-                onBlocking { searchProducts(anyString(), anyInt()) } doReturn TestData.dataRepoResponseEmpty
+                onBlocking {
+                    searchProducts(
+                        anyString(),
+                        anyInt()
+                    )
+                } doReturn TestData.dataRepoResponseEmpty
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 

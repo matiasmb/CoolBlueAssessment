@@ -24,8 +24,10 @@ import org.mockito.ArgumentMatchers
 class ItemsViewModelTest {
 
     private lateinit var viewModel: ItemsViewModel
+
     @get:Rule
     var coroutinesRule = CoroutinesRule()
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 

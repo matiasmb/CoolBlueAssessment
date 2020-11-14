@@ -1,11 +1,10 @@
-package com.matiasmb.coolbluesearch.domain
+package com.matiasmb.coolbluesearch.domain.provider
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PageKeyedDataSource
 import com.matiasmb.coolbluesearch.CoroutinesRule
 import com.matiasmb.coolbluesearch.TestData.serviceSuccessResponse
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
-import com.matiasmb.coolbluesearch.domain.repository.ProductPageKeyedDataSource
 import com.matiasmb.coolbluesearch.getOrAwaitValue
 import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import com.nhaarman.mockitokotlin2.doReturn
