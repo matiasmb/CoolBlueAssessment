@@ -7,4 +7,6 @@
     <color name="green">#15984A</color>
     <color name="white_with_alpha">#AAFFFFFF</color>
     <color name="shadow_spinner">#30000000</color>
+    <color name="promo_action_price">#E8EB03</color>
+    <color name="coolblues_choice">#3399FF</color>
 </resources>

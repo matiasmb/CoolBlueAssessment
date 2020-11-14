@@ -6,6 +6,7 @@ import com.matiasmb.coolbluesearch.data.model.Response
 import com.matiasmb.coolbluesearch.data.model.Review
 import com.matiasmb.coolbluesearch.data.model.ReviewSummary
 import com.matiasmb.coolbluesearch.presentation.model.ItemView
+import com.matiasmb.coolbluesearch.presentation.model.PromoItem
 import kotlinx.coroutines.flow.flow
 
 object TestData {
@@ -47,7 +48,9 @@ object TestData {
             reviewAverage = 7.5,
             reviewCount = 3123,
             nextDayDeliveryFlag = true,
-            extraInfo = listOf("small", "iphone x", "good camera")
+            extraInfo = listOf("small", "iphone x", "good camera"),
+            choiceTitle = "testTitle",
+            promoItem = PromoItem.CoolBluesChoice("textTest")
         )
     )
 }

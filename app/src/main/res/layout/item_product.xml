@@ -28,6 +28,20 @@
         layout:layout_constraintTop_toTopOf="@id/card_layout" />
 
     <TextView
+        android:id="@+id/promo_text"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:layout_marginEnd="@dimen/horizontal_spacing"
+        android:elevation="@dimen/elevation"
+        android:visibility="gone"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toTopOf="@id/product_image"
+        tools:text="{ promo text }" />
+
+    <TextView
         android:id="@+id/product_name"
         style="@android:style/TextAppearance.Medium"
         android:layout_width="@dimen/match_constraint"
@@ -37,8 +51,21 @@
         android:elevation="@dimen/elevation"
         layout:layout_constraintLeft_toRightOf="@id/product_image"
         layout:layout_constraintRight_toRightOf="@id/card_layout"
-        layout:layout_constraintTop_toTopOf="@id/product_image"
+        layout:layout_constraintTop_toBottomOf="@id/promo_text"
         tools:text="{product name}" />
+
+    <TextView
+        android:id="@+id/product_choice_title"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:elevation="@dimen/elevation"
+        android:visibility="gone"
+        layout:layout_constraintLeft_toRightOf="@id/product_image"
+        layout:layout_constraintRight_toRightOf="@id/card_layout"
+        layout:layout_constraintTop_toBottomOf="@id/product_name"
+        tools:text="een middenklasse iPad" />
 
     <TextView
         android:id="@+id/product_price"
@@ -51,7 +78,7 @@
         android:textColor="@color/red"
         layout:layout_constraintLeft_toRightOf="@id/product_image"
         layout:layout_constraintRight_toRightOf="@id/card_layout"
-        layout:layout_constraintTop_toBottomOf="@id/product_name"
+        layout:layout_constraintTop_toBottomOf="@id/product_choice_title"
         tools:text="$236" />
 
     <TextView

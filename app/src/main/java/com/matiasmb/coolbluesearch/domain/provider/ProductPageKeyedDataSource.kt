@@ -3,8 +3,10 @@ package com.matiasmb.coolbluesearch.domain.provider
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.matiasmb.coolbluesearch.data.model.Product
+import com.matiasmb.coolbluesearch.data.model.PromoIcon
 import com.matiasmb.coolbluesearch.data.networking.ItemsApiService
 import com.matiasmb.coolbluesearch.presentation.model.ItemView
+import com.matiasmb.coolbluesearch.presentation.model.PromoItem
 import com.matiasmb.coolbluesearch.presentation.model.TransactionState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -67,14 +69,26 @@ class ProductPageKeyedDataSource(
                 product.reviewInformation.reviewSummary.reviewAverage,
                 product.reviewInformation.reviewSummary.reviewCount,
                 product.nextDayDelivery,
-                product.USPs
+                product.USPs,
+                product.coolbluesChoiceInformationTitle,
+                getPromoItem(product.promoIcon)
             )
+        }
+    }
+
+    private fun getPromoItem(promoIcon: PromoIcon?): PromoItem? {
+        return when (promoIcon?.type) {
+            COOLBLUES_CHOICE -> PromoItem.CoolBluesChoice(promoIcon.text)
+            ACTION_PRICE -> PromoItem.ActionPrice(promoIcon.text)
+            else -> null
         }
     }
 
     companion object {
         const val DEFAULT_FIRST_PAGE = 1
         const val MAX_PAGES = 3
+        const val COOLBLUES_CHOICE = "coolblues-choice"
+        const val ACTION_PRICE = "action-price"
     }
 
 }

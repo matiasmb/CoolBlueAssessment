@@ -10,6 +10,8 @@ sealed class ItemView {
         val reviewAverage: Double,
         val reviewCount: Int,
         val nextDayDeliveryFlag: Boolean,
-        val extraInfo: List<String>
+        val extraInfo: List<String>,
+        val choiceTitle: String? = "",
+        val promoItem: PromoItem? = null
     ) : ItemView()
 }
