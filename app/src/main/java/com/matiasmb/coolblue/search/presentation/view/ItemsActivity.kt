@@ -35,12 +35,12 @@ class ItemsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         val myActionMenuItem = menu?.findItem(R.id.action_search)
-        val searchView = myActionMenuItem?.actionView as SearchView
-        searchView.setIconifiedByDefault(false)
-        searchView.isIconified = false
-        searchView.queryHint = resources.getString(R.string.find_your_product)
-        myActionMenuItem.expandActionView()
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        val searchView = myActionMenuItem?.actionView as? SearchView
+        searchView?.setIconifiedByDefault(false)
+        searchView?.isIconified = false
+        searchView?.queryHint = resources.getString(R.string.find_your_product)
+        myActionMenuItem?.expandActionView()
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.fetchItems(query)
                 return false
@@ -55,8 +55,7 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun setObservers() {
-        viewModel.products.observe(this, ::loadList)
-        viewModel.stateScreen.observe(this, ::loadScreen)
+        viewModel.liveDataMerger.observe(this, ::loadScreen)
     }
 
     @VisibleForTesting(otherwise = PRIVATE)
@@ -74,21 +73,31 @@ class ItemsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun loadScreen(itemsStateScreen: TransactionState) {
+    fun loadScreen(itemsStateScreen: TransactionState<PagedList<ItemView>>) {
         when (itemsStateScreen) {
             TransactionState.Running -> {
-                loading_background.visibility = VISIBLE
-                loading.visibility = VISIBLE
+                setLoadingVisibility(true)
             }
-            TransactionState.Success -> {
-                loading_background.visibility = GONE
-                loading.visibility = GONE
+            is TransactionState.LoadData -> {
+                loadList(itemsStateScreen.data)
+            }
+            TransactionState.EndLoadData -> {
+                setLoadingVisibility(false)
             }
             TransactionState.Fail -> {
-                loading_background.visibility = GONE
-                loading.visibility = GONE
+                setLoadingVisibility(false)
                 showErrorScreen()
             }
+        }
+    }
+
+    private fun setLoadingVisibility(shouldShowLoading: Boolean) {
+        if (shouldShowLoading) {
+            loading_background.visibility = VISIBLE
+            loading.visibility = VISIBLE
+        } else {
+            loading_background.visibility = GONE
+            loading.visibility = GONE
         }
     }
 

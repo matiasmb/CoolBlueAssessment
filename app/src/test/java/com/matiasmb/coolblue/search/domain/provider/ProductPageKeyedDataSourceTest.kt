@@ -55,7 +55,7 @@ class ProductPageKeyedDataSourceTest {
                 )
 
                 //THEN
-                assertTrue(productPageKeyedDataSource.transactionState.getOrAwaitValue() is TransactionState.Success)
+                assertTrue(productPageKeyedDataSource.transactionState.getOrAwaitValue() is TransactionState.EndLoadData)
             }
         }
     }
@@ -116,7 +116,7 @@ class ProductPageKeyedDataSourceTest {
                 )
 
                 //THEN
-                assertTrue(productPageKeyedDataSource.transactionState.getOrAwaitValue() is TransactionState.Success)
+                assertTrue(productPageKeyedDataSource.transactionState.getOrAwaitValue() is TransactionState.EndLoadData)
             }
         }
     }

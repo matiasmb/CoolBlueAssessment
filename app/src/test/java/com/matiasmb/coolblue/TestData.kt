@@ -39,7 +39,7 @@ object TestData {
     val serviceSuccessResponse = flow { emit(dataProductsResponse) }
 
     val itemViewList = listOf(
-        ItemView.Product(
+        ItemView(
             id = 1,
             name = "iphone",
             imageUrl = "https://image.coolblue.nl/300x750/products/1009539",

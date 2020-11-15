@@ -37,7 +37,7 @@ class ItemsAdapter(private val context: Context) :
                 oldItem == newItem
 
             override fun areContentsTheSame(oldItem: ItemView, newItem: ItemView): Boolean =
-                (oldItem as ItemView.Product).id == (newItem as ItemView.Product).id
+                oldItem.id == newItem.id
         }
     }
 }

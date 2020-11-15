@@ -17,8 +17,7 @@ import kotlinx.android.synthetic.main.item_product.view.*
 class ItemViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
 
     fun onBindViewHolder(data: ItemView?) {
-        val holderData = data as? ItemView.Product
-        holderData?.let { productItemViewData ->
+        data?.let { productItemViewData ->
             itemView.apply {
                 product_name.text = productItemViewData.name
                 product_image.loadImage(productItemViewData.imageUrl, itemView.context)
@@ -34,7 +33,7 @@ class ItemViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder
         }
     }
 
-    private fun setRatingComponent(productItemViewData: ItemView.Product) {
+    private fun setRatingComponent(productItemViewData: ItemView) {
         itemView.apply {
             product_rating_bar.rating = productItemViewData.reviewAverage.toFloat()
             product_rating_info.text =
@@ -42,7 +41,7 @@ class ItemViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder
         }
     }
 
-    private fun setPromoItemComponent(productItemViewData: ItemView.Product) {
+    private fun setPromoItemComponent(productItemViewData: ItemView) {
         itemView.apply {
             when (productItemViewData.promoItem) {
                 is PromoItem.ActionPrice -> {
@@ -70,7 +69,7 @@ class ItemViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder
         }
     }
 
-    private fun setChoiceTitleComponent(productItemViewData: ItemView.Product) {
+    private fun setChoiceTitleComponent(productItemViewData: ItemView) {
         itemView.apply {
             productItemViewData.choiceTitle?.let {
                 product_choice_title.text = it

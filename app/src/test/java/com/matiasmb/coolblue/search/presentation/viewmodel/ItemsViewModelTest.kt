@@ -40,7 +40,7 @@ class ItemsViewModelTest {
     }
 
     @Test
-    fun `fetchItems SHOULD call products liveData WITH a list of products AND stateScreen liveData should be success`() {
+    fun `fetchItems SHOULD call products liveData WITH a list of products AND stateScreen liveData should be en load data`() {
         runBlocking {
             launch(Dispatchers.Main) {
 
@@ -61,7 +61,34 @@ class ItemsViewModelTest {
 
                 //THEN
                 assertTrue(viewModel.products.getOrAwaitValue().snapshot().isNotEmpty())
-                assertTrue(viewModel.stateScreen.getOrAwaitValue() is TransactionState.Success)
+                assertTrue(viewModel.stateScreen.getOrAwaitValue() is TransactionState.EndLoadData)
+            }
+        }
+    }
+
+    @Test
+    fun `fetchItems SHOULD call products liveDataMerger WITH load data state AND after load data is complete call the mediator live data with EndLoadData`() {
+        runBlocking {
+            launch(Dispatchers.Main) {
+
+                //GIVEN
+                val itemsApiService = mock<ItemsApiService> {
+                    onBlocking {
+                        getProductsByQuery(
+                            ArgumentMatchers.anyString(),
+                            ArgumentMatchers.anyInt()
+                        )
+                    } doReturn TestData.serviceSuccessResponse
+                }
+                val domainInteractor = DomainInteractorImpl(itemsApiService)
+                viewModel = ItemsViewModel(domainInteractor)
+
+                //WHEN
+                viewModel.fetchItems("iphone")
+
+                //THEN
+                assertTrue(viewModel.liveDataMerger.getOrAwaitValue() is TransactionState.LoadData)
+                assertTrue(viewModel.liveDataMerger.getOrAwaitValue() is TransactionState.EndLoadData)
             }
         }
     }

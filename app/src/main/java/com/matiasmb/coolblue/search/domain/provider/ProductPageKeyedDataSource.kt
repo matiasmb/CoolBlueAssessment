@@ -2,6 +2,7 @@ package com.matiasmb.coolblue.search.domain.provider
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
 import com.matiasmb.coolblue.search.data.model.Product
 import com.matiasmb.coolblue.search.data.model.PromoIcon
 import com.matiasmb.coolblue.search.data.networking.ItemsApiService
@@ -16,7 +17,8 @@ class ProductPageKeyedDataSource(
     private val query: String
 ) : PageKeyedDataSource<Int, ItemView>() {
 
-    val transactionState = MutableLiveData<TransactionState>()
+    val transactionState =
+        MutableLiveData<TransactionState<PagedList<ItemView>>>()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -27,7 +29,7 @@ class ProductPageKeyedDataSource(
             try {
                 apiService.getProductsByQuery(query, DEFAULT_FIRST_PAGE).collect {
                     callback.onResult(transformResult(it.products), null, DEFAULT_FIRST_PAGE + 1)
-                    transactionState.postValue(TransactionState.Success)
+                    transactionState.postValue(TransactionState.EndLoadData)
                 }
             } catch (exception: Exception) {
                 transactionState.postValue(TransactionState.Fail)
@@ -49,7 +51,7 @@ class ProductPageKeyedDataSource(
                 try {
                     apiService.getProductsByQuery(query, currentPage).collect {
                         callback.onResult(transformResult(it.products), nextPage)
-                        transactionState.postValue(TransactionState.Success)
+                        transactionState.postValue(TransactionState.EndLoadData)
                     }
                 } catch (exception: Exception) {
                     transactionState.postValue(TransactionState.Fail)
@@ -60,7 +62,7 @@ class ProductPageKeyedDataSource(
 
     private fun transformResult(productList: List<Product>): List<ItemView> {
         return productList.map { product ->
-            ItemView.Product(
+            ItemView(
                 product.productId,
                 product.productName,
                 product.productImage,

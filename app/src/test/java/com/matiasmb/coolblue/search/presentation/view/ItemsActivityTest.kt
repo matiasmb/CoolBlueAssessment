@@ -3,6 +3,7 @@ package com.matiasmb.coolblue.search.presentation.view
 import android.os.Build
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.matiasmb.coolblue.R
 import com.matiasmb.coolblue.TestData.itemViewList
 import com.matiasmb.coolblue.mockPagedList
 import com.matiasmb.coolblue.search.presentation.model.TransactionState
@@ -17,6 +18,7 @@ import org.koin.test.KoinTest
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import org.robolectric.fakes.RoboMenu
 
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
@@ -45,21 +47,35 @@ class ItemsActivityTest : KoinTest {
 
     @Test
     fun `loadScreen SHOULD hide loading items because a success was received`() {
-        shadowActivity.loadScreen(TransactionState.Success)
+        shadowActivity.loadScreen(TransactionState.EndLoadData)
         assertTrue(shadowActivity.loading.visibility == GONE)
         assertTrue(shadowActivity.loading_background.visibility == GONE)
     }
 
     @Test
     fun `loadScreen SHOULD hide loading items because a failure was received`() {
-        shadowActivity.loadScreen(TransactionState.Success)
+        shadowActivity.loadScreen(TransactionState.Fail)
         assertTrue(shadowActivity.loading.visibility == GONE)
         assertTrue(shadowActivity.loading_background.visibility == GONE)
     }
 
     @Test
-    fun `loadlist SHOULD hide loading items because a failure was received`() {
+    fun `loadScreen SHOULD hide loading items because a load data was received`() {
+        shadowActivity.loadScreen(TransactionState.LoadData(mockPagedList(itemViewList)))
+        assertTrue(shadowActivity.loading.visibility == GONE)
+        assertTrue(shadowActivity.loading_background.visibility == GONE)
+    }
+
+    @Test
+    fun `loadList SHOULD load into the recyclerview one item`() {
         shadowActivity.loadList(mockPagedList(itemViewList))
         assertTrue(shadowActivity.list_item.adapter?.itemCount == 1)
+    }
+
+    @Test
+    fun `onCreateOptionsMenu SHOULD load into the recyclerview one item`() {
+        val menu = RoboMenu()
+        shadowActivity.onCreateOptionsMenu(menu)
+        assertTrue(menu.getItem(0).title == shadowActivity.resources.getString(R.string.search))
     }
 }
