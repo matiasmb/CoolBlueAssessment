@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">CoolBlueSearch</string>
-    <string name="add_repos_title">Search Products</string>
+    <string name="search_products_title">Search Products</string>
     <string name="search">Search</string>
     <string name="find_your_product">Find your product</string>
-    <string name="error_searching_for_repos">The product search fail try again</string>
+    <string name="error_searching_for_products">The product search fail try again</string>
     <string name="product_available">Stock: %s</string>
     <string name="image_description">app description image</string>
     <string name="delivery_express">Delivery in one day!!!</string>

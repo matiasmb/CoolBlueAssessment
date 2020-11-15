@@ -23,20 +23,20 @@ object TestData {
         promoIcon = PromoIcon("textTest", "typeTest"),
         coolbluesChoiceInformationTitle = "testTitle"
     )
-    val dataRepoResponseEmpty = Response(
+    val dataProductsResponseEmpty = Response(
         emptyList(),
         1,
         0,
         1
     )
-    val dataRepoResponse = Response(
+    val dataProductsResponse = Response(
         listOf(product),
         1,
         24,
         3
     )
 
-    val serviceSuccessResponse = flow { emit(dataRepoResponse) }
+    val serviceSuccessResponse = flow { emit(dataProductsResponse) }
 
     val itemViewList = listOf(
         ItemView.Product(

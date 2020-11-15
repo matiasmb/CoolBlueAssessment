@@ -28,7 +28,7 @@ class ItemsApiServiceImplTest {
                         anyString(),
                         anyInt()
                     )
-                } doReturn TestData.dataRepoResponse
+                } doReturn TestData.dataProductsResponse
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 
@@ -52,7 +52,7 @@ class ItemsApiServiceImplTest {
                         anyString(),
                         anyInt()
                     )
-                } doReturn TestData.dataRepoResponseEmpty
+                } doReturn TestData.dataProductsResponseEmpty
             }
             itemsApiService = ItemsApiServiceImpl(apiClient)
 

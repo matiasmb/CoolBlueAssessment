@@ -70,7 +70,7 @@ class ItemsActivity : AppCompatActivity() {
 
     private fun setUpToolbar() {
         setSupportActionBar(toolbar)
-        supportActionBar?.setTitle(R.string.add_repos_title)
+        supportActionBar?.setTitle(R.string.search_products_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -95,7 +95,7 @@ class ItemsActivity : AppCompatActivity() {
     private fun showErrorScreen() {
         Snackbar.make(
             coordinator_layout,
-            getString(R.string.error_searching_for_repos),
+            getString(R.string.error_searching_for_products),
             Snackbar.LENGTH_LONG
         ).apply {
             view.setBackgroundColor(ContextCompat.getColor(this@ItemsActivity, R.color.red))
