@@ -16,8 +16,7 @@ class ItemsAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false),
-            context
+            LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         )
 
 

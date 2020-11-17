@@ -1,6 +1,5 @@
 package com.matiasmb.coolblue.search.presentation.adapter.holder
 
-import android.content.Context
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -14,7 +13,7 @@ import com.matiasmb.coolblue.search.presentation.model.PromoItem
 import com.matiasmb.coolblue.search.presentation.parseCurrency
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ItemViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
+class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBindViewHolder(data: ItemView?) {
         data?.let { productItemViewData ->
